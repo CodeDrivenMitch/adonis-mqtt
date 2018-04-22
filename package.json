@@ -4,7 +4,13 @@
   "description": "Easily connect MQTT to you adonisjs app",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "lint": "standard",
+    "posttest": "npm run coverage",
+    "pretest": "npm run lint",
+    "test": "nyc npm run test:local",
+    "test:local": "FORCE_COLOR=true node bin/index.js --local",
+    "test:win": "set FORCE_COLOR=true && node bin/index.js --win"
   },
   "keywords": [
     "adonis",
