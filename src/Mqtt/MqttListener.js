@@ -2,7 +2,7 @@
 
 class MqttListener {
   get subscription () {
-    return '#'
+    return '';
   }
 
   handleMessage (message, matchedWildcards) {

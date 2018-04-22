@@ -109,6 +109,7 @@ class Mqtt {
       throw new Error('MqttListener does not have a subscription string! ' + file)
     }
     this.client.subscribe(taskInstance.subscription)
+    debug('Subscribed to topic %s', taskInstance.subscription);
     this.listeners.push(taskInstance)
   }
 
