@@ -4,7 +4,6 @@ const { ServiceProvider } = require('@adonisjs/fold')
 
 class MqttProvider extends ServiceProvider {
   _registerMqtt () {
-    this.app.singleton('Insidion/MqttClient', () => make(require('./../src/Mqtt/MqttClient')))
     this.app.singleton('Insidion/Mqtt', () => make(require('./../src/Mqtt/Mqtt')))
   }
 
