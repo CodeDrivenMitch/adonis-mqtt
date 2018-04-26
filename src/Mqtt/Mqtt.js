@@ -21,10 +21,12 @@ class Mqtt {
     this.Config = Config
     this.listeners = []
 
+    this.Event.fire('MQTT:Initializing')
     this._createClient()
 
     this._configureListenersPath()
     this._registerListeners()
+    this.Event.fire('MQTT:Initialized')
   }
 
   _handleConnect () {
@@ -74,7 +76,7 @@ class Mqtt {
     } catch (e) {
       // If the directory isn't found, log a message and exit gracefully
       if (e.code === 'ENOENT') {
-        throw new Error('Listeners folder not found!')
+        throw new Error('MqttListeners folder not found!')
       }
 
       throw e
@@ -106,11 +108,12 @@ class Mqtt {
     // Get instance of task class
     const taskInstance = ioc.make(task)
     if (!taskInstance.subscription || taskInstance.subscription === '') {
-      throw new Error('MqttListener does not have a subscription string! ' + file)
+      console.error(`MqttListener ${file} does not have a subscription string!`)
+    } else {
+      this.client.subscribe(taskInstance.subscription)
+      debug('Subscribed to topic %s', taskInstance.subscription)
+      this.listeners.push(taskInstance)
     }
-    this.client.subscribe(taskInstance.subscription)
-    debug('Subscribed to topic %s', taskInstance.subscription);
-    this.listeners.push(taskInstance)
   }
 
   _createClient () {

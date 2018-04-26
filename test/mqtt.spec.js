@@ -33,7 +33,7 @@ test.group('Scheduler', (group) => {
   function getEvent () {
     ioc.fake('Adonis/Src/Event', () => {
       return {
-        fire: () => {},
+        fire: () => {}
       }
     })
     return ioc.use('Adonis/Src/Event')
@@ -68,10 +68,10 @@ test.group('Scheduler', (group) => {
           cmd: 'publish',
           qos: 2,
           topic: 'mock/example/one',
-          payload: new Buffer('test'),
-          retain: false,
+          payload: Buffer.from('test'),
+          retain: false
         })
-      }, 100)
+      }, 500)
     })
   })
 
@@ -93,8 +93,8 @@ test.group('Scheduler', (group) => {
           cmd: 'publish',
           qos: 2,
           topic: 'mock/example/one',
-          payload: new Buffer('test'),
-          retain: false,
+          payload: Buffer.from('test'),
+          retain: false
         })
       }, 100)
     })
@@ -107,7 +107,6 @@ test.group('Scheduler', (group) => {
     const mqtt = new Mqtt(Event, Config, Helpers)
 
     mqtt.listeners[0].handleMessage = (message, matchedWildcards) => {
-      clearTimeout(resolveTimeout)
       done(new Error())
     }
 
@@ -116,8 +115,8 @@ test.group('Scheduler', (group) => {
         cmd: 'publish',
         qos: 2,
         topic: 'mock/example2/one',
-        payload: new Buffer('test'),
-        retain: false,
+        payload: Buffer.from('test'),
+        retain: false
       })
     }, 100)
 
@@ -134,7 +133,7 @@ test.group('Scheduler', (group) => {
     const mqtt = new Mqtt(Event, Config, Helpers)
 
     assert.equal(mqtt.listeners.length, 0)
-  });
+  })
 
   test('Should skip instantiation of empty listener file', (assert) => {
     const Helpers = getHelpers('bad_two')

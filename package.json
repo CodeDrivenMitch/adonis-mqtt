@@ -6,6 +6,7 @@
   "scripts": {
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "lint": "standard",
+    "lint:fix": "standard --fix",
     "posttest": "npm run coverage",
     "test": "nyc npm run test:local",
     "test:local": "FORCE_COLOR=true node bin/index.js --local",
@@ -18,8 +19,10 @@
   "author": "Mitchell Herrijgers",
   "license": "MIT",
   "dependencies": {
+    "lodash": "^4.17.10",
     "mqtt": "^2.17.0",
-    "mqtt-wildcard": "^3.0.9"
+    "mqtt-wildcard": "^3.0.9",
+    "pluralize": "^7.0.0"
   },
   "devDependencies": {
     "@adonisjs/ace": "^4.0.5",
