@@ -6,50 +6,73 @@ Adonis-mqtt is a provider to integrate MQTT in your app. This is useful when dev
 
 ## Features
 - MQTT Connection using mqtt.js
-- Easy integration with Listener classes
+- Easy integration with MqttListener classes
+- Included CLI generator for MqttListener classes
 
 ## Roadmap
 These are the features that I still want to developing in the near future.
 
 - Easily send MQTT messages
 - Check SSL support (currently untested)
-- MessageListener generation using ACE
 - Improve tests and documentation
 
 ## Usage
 
-To use adonis-mqtt, add the folliowing to your providers:
+```bash
+npm i --save adonis-mqtt
+```
+
+To use adonis-mqtt, add the following to your providers:
 
 ```js
 
+// Add the mqtt provider
 const providers = [
   // ...
   'adonis-mqtt/providers/MqttProvider',
 ]
+
+// ...
+// Add the command provider
+const aceProviders = [
+  // ...
+  'adonis-mqtt/providers/CommandsProvider',
+]
 ```
 
 Then we'll have to `use` Mqtt somewhere so it gets initialized. I prefer it in the `app.events.js` file, since all event-related stuff is defined there. 
+This is only needed if you do not use it anywhere else (for example when sending messages).
 
 ```js
 const Event = use('Event');
 const Mqtt = use('Mqtt');
    
-   
+// Listen to some Events of the library
 Event.on('MQTT:Connected', 'Message.connected')
 Event.on('MQTT:Disconnected', 'Message.disconnected')
 ```
 
 Now adonis-mqtt is ready for use. 
-You can define multiple MessageListeners, which the provider will automatically pick up. 
 
-MessageListeners should be defined in the `app/MessageListeners` folder, and should have the following contents:
+## Listeners
+You can define multiple MqttListeners, which the provider will automatically pick up on boot.
+
+You can generate a listener by using the adonis cli:
+
+```bash
+adonis make:mqtt-listener Test
+```
+
+This command will generate a listener class called TestMqttListener.
+
+MqttListeners should are defined in the `app/MqttListeners` folder and should have the following base content:
 
 ```js
 const MqttListener = use('MqttListener')
 
 class MockListener extends MqttListener {
   /*
-   * Subscription string. Follows the MQTT format.
+   * Subscription string. Uses the MQTT wildcard format.
    */
   get subscription () {
     return 'my/+/example/mqtt/string/#'
@@ -58,7 +81,7 @@ class MockListener extends MqttListener {
   /**
   * Message handler is passed the String data of the message and the matched wildcard values
   */
-  async handleMessage (message, matchedWildcards) {
+  async handleMessage (message, wildcardMatches) {
   }
 }
 
@@ -66,10 +89,12 @@ module.exports = MockListener
 
 ```
 
-The latter part will be coveraged by an adonis CLI generator soon. 
-
 
 ## Contributing
 You are free to contribute, make pull requests and create issues. 
 
 I will work on this project in my free time and will be using it to build my own home automation system. 
+
+## Special Thanks
+
+The code of [adonis-scheduler](https://github.com/nrempel/adonis-scheduler/) was a great example in many ways. This helped me tremendously. 
