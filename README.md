@@ -1,6 +1,7 @@
 # Adonis MQTT Integration
 
 [![Coverage Status](https://coveralls.io/repos/github/Morlack/adonis-mqtt/badge.svg?branch=master)](https://coveralls.io/github/Morlack/adonis-mqtt?branch=master)
+[![Build status](https://ci.appveyor.com/api/projects/status/ox5qs72l40kxci34/branch/master?svg=true)](https://ci.appveyor.com/project/Morlack/adonis-mqtt/branch/master)
 
 Adonis-mqtt is a provider to integrate MQTT in your app. This is useful when developing an IOT application, or need a simple message broker.
 
