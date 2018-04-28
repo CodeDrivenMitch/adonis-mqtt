@@ -52,6 +52,15 @@ Event.on('MQTT:Connected', 'Message.connected')
 Event.on('MQTT:Disconnected', 'Message.disconnected')
 ```
 
+Lastly we should add some configuration to the `.env` file so MQTT knows where and how to connect
+
+```
+MQTT_HOST=yourmqtthost.com
+MQTT_PORT=10444
+MQTT_USERNAME=username123
+MQTT_PASSWORD=password123#
+```
+
 Now adonis-mqtt is ready for use. 
 
 ## Listeners
