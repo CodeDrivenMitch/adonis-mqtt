@@ -143,4 +143,52 @@ test.group('Scheduler', (group) => {
 
     assert.equal(mqtt.listeners.length, 0)
   })
+
+  test('Can send MQTT message', function(assert) {
+    const Helpers = getHelpers('good')
+    const Config = getConfig()
+    const Event = getEvent()
+    const mqtt = new Mqtt(Event, Config, Helpers)
+
+    return new Promise((resolve) => {
+      const handler = (packet, cb) => {
+        assert.equal(packet.topic, 'topic/test');
+        assert.equal(packet.qos, 0);
+        assert.equal(packet.retain, false);
+        assert.equal(packet.payload.toString(), 'Hello');
+        cb();
+        resolve();
+
+        aedes.unsubscribe('topic/test', handler);
+      };
+
+      aedes.subscribe('topic/test', handler, () => {
+        mqtt.sendMessage('topic/test', 'Hello')
+      })
+    })
+  })
+
+  test('Can send MQTT message with options', function(assert) {
+    const Helpers = getHelpers('good')
+    const Config = getConfig()
+    const Event = getEvent()
+    const mqtt = new Mqtt(Event, Config, Helpers)
+
+    return new Promise((resolve) => {
+      const handler = (packet, cb) => {
+        assert.equal(packet.topic, 'topic/test');
+        assert.equal(packet.qos, 2);
+        assert.equal(packet.retain, false);
+        assert.equal(packet.payload.toString(), 'Hello');
+        cb();
+        resolve();
+
+        aedes.unsubscribe('topic/test', handler);
+      };
+
+      aedes.subscribe('topic/test', handler, () => {
+        mqtt.sendMessage('topic/test', 'Hello', {qos: 2})
+      })
+    })
+  })
 })

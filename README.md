@@ -13,7 +13,6 @@ Adonis-mqtt is a provider to integrate MQTT in your app. This is useful when dev
 ## Roadmap
 These are the features that I still want to developing in the near future.
 
-- Easily send MQTT messages
 - Check SSL support (currently untested)
 - Improve tests and documentation
 
@@ -64,6 +63,21 @@ MQTT_PASSWORD=password123#
 
 Now adonis-mqtt is ready for use. 
 
+## Sending messages
+
+Sending messages through your MQTT server is very easy.
+
+```js
+const Mqtt = use('Mqtt');
+
+class SomeController {
+  async index() {
+    await Mqtt.sendMessage('mytopic', 'My Message', {qos: 1})
+  }
+}
+
+```
+
 ## Listeners
 You can define multiple MqttListeners, which the provider will automatically pick up on boot.
 
@@ -98,7 +112,6 @@ class MockListener extends MqttListener {
 module.exports = MockListener
 
 ```
-
 
 ## Contributing
 You are free to contribute, make pull requests and create issues. 

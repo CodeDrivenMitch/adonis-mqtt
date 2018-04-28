@@ -20,6 +20,7 @@ class Mqtt {
       debug('MQTT not booting since execution is an ACE command')
       return
     }
+
     this.Event = Event
     this.Helpers = Helpers
     this.Config = Config
@@ -31,6 +32,27 @@ class Mqtt {
     this._configureListenersPath()
     this._registerListeners()
     this.Event.fire('MQTT:Initialized')
+  }
+
+  /**
+   * publish - publish <message> to <topic>
+   *
+   * @param {String} topic - topic to publish to
+   * @param {(String|Buffer)} message - message to publish
+   *
+   * @param {Object}    [opts] - publish options, includes:
+   *   @param {Number}  [opts.qos] - qos level to publish on
+   *   @param {Boolean} [opts.retain] - whether or not to retain the message
+   *
+   * @returns {Promise} Result of publish
+   *
+   * @example await Mqtt.sendMessage('test/topic', 'This is a message')
+   * @example await Mqtt.sendMessage('test/topic', 'This is a message', {qos: 2})
+   */
+  async sendMessage(topic, message, opts) {
+    return new Promise((resolve) => {
+      this.client.publish(topic, message, opts, resolve);
+    })
   }
 
   _handleConnect () {
@@ -53,10 +75,6 @@ class Mqtt {
         listener.handleMessage(message.toString(), matchedWildcards)
       }
     }
-  }
-
-  _handleError (e) {
-    console.log(e) // TODO
   }
 
   /**
@@ -132,7 +150,6 @@ class Mqtt {
     this.client.on('offline', this._handleDisconnect.bind(this))
     this.client.on('close', this._handleDisconnect.bind(this))
     this.client.on('end', this._handleDisconnect.bind(this))
-    this.client.on('error', this._handleError.bind(this))
     this.client.on('message', this._handleMessage.bind(this))
   }
 }
