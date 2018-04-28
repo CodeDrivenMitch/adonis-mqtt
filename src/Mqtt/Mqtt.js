@@ -16,6 +16,10 @@ class Mqtt {
   }
 
   constructor (Event, Config, Helpers) {
+    if(Helpers.isAceCommand()) {
+      debug('MQTT not booting since execution is an ACE command')
+      return
+    }
     this.Event = Event
     this.Helpers = Helpers
     this.Config = Config
