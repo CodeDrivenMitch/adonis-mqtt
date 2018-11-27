@@ -19,7 +19,7 @@ These are the features that I still want to developing in the near future.
 ## Usage
 
 ```bash
-npm i --save adonis-mqtt
+npm install adonis-mqtt
 ```
 
 To use adonis-mqtt, add the following to your providers:
@@ -52,11 +52,22 @@ Event.on('MQTT:Connected', 'Message.connected')
 Event.on('MQTT:Disconnected', 'Message.disconnected')
 ```
 
+Add new config file into folder config, let's say we have file `mqtt.js` then add code below.
+
+```js
+const Env = use('Env')
+
+module.exports = {
+  url: Env.get('MQTT_URL'),
+  username: Env.get('MQTT_USERNAME', ''),
+  password: Env.get('MQTT_PASSWORD', '')
+}
+```
+
 Lastly we should add some configuration to the `.env` file so MQTT knows where and how to connect
 
 ```
-MQTT_HOST=yourmqtthost.com
-MQTT_PORT=10444
+MQTT_URL=wss://yourmqtthost.com:10444/path
 MQTT_USERNAME=username123
 MQTT_PASSWORD=password123#
 ```

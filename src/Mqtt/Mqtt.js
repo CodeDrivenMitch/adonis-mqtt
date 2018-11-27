@@ -140,7 +140,7 @@ class Mqtt {
 
   _createClient () {
     this.client = mqtt.connect(
-      `mqtt://${this.Config.get('mqtt.host')}:${this.Config.get('mqtt.port')}`,
+      `${this.Config.get('mqtt.url')}`,
       {
         username: this.Config.get('mqtt.username'),
         password: this.Config.get('mqtt.password')
