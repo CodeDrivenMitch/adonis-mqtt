@@ -129,7 +129,7 @@ class Mqtt {
 
     // Get instance of task class
     const taskInstance = ioc.make(task)
-     if (!taskInstance.subscription || taskInstance.subscription === '') {
+    if (!taskInstance.subscription || taskInstance.subscription === '') {
       console.error(`MqttListener ${file} does not have a subscription string!`)
     } else {
       this.client.subscribe(taskInstance.subscription)
