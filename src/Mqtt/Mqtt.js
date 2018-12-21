@@ -139,13 +139,23 @@ class Mqtt {
   }
 
   _createClient () {
-    this.client = mqtt.connect(
-      `mqtt://${this.Config.get('mqtt.host')}:${this.Config.get('mqtt.port')}`,
-      {
-        username: this.Config.get('mqtt.username'),
-        password: this.Config.get('mqtt.password')
-      }
-    )
+    const options = {
+      username: this.Config.get('mqtt.username'),
+      password: this.Config.get('mqtt.password'),
+
+      // Necessary only if the server requires client certificate authentication.
+      key: fs.readFileSync('mqtt.key'),
+      cert: fs.readFileSync('mqtt.cert'),
+
+      // Necessary only if the server uses a self-signed certificate.
+      ca: [ fs.readFileSync('mqtt.ca') ],
+
+      // Necessary only if the server's cert isn't for "localhost".
+      checkServerIdentity: () => { return null; },
+      rejectUnauthorized: this.Config.get('mqtt.unauthorized'),
+    };
+
+    this.client = mqtt.connect(`mqtt://${this.Config.get('mqtt.host')}:${this.Config.get('mqtt.port')}`, options)
     this.client.on('connect', this._handleConnect.bind(this))
     this.client.on('offline', this._handleDisconnect.bind(this))
     this.client.on('close', this._handleDisconnect.bind(this))
