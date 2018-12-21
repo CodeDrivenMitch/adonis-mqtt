@@ -24,6 +24,7 @@ class Mqtt {
     this.Event = Event
     this.Helpers = Helpers
     this.Config = Config
+
     this.listeners = []
 
     this.Event.fire('MQTT:Initializing')
@@ -144,17 +145,16 @@ class Mqtt {
       password: this.Config.get('mqtt.password'),
 
       // Necessary only if the server requires client certificate authentication.
-      key: fs.readFileSync('mqtt.key'),
-      cert: fs.readFileSync('mqtt.cert'),
+      key: fs.readFileSync(this.Config.get('mqtt.key')),
+      cert: fs.readFileSync(this.Config.get('mqtt.cert')),
 
       // Necessary only if the server uses a self-signed certificate.
-      ca: [ fs.readFileSync('mqtt.ca') ],
+      ca: [ fs.readFileSync(this.Config.get('mqtt.ca')) ],
 
       // Necessary only if the server's cert isn't for "localhost".
       checkServerIdentity: () => { return null; },
-      rejectUnauthorized: this.Config.get('mqtt.unauthorized'),
-    };
-
+      rejectUnauthorized: false,
+    }
     this.client = mqtt.connect(`mqtt://${this.Config.get('mqtt.host')}:${this.Config.get('mqtt.port')}`, options)
     this.client.on('connect', this._handleConnect.bind(this))
     this.client.on('offline', this._handleDisconnect.bind(this))
