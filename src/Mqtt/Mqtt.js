@@ -141,7 +141,7 @@ class Mqtt {
   _createClient () {
     if (!this.Config.get('mqtt.aws.endpoint')) {
       this.client = mqtt.connect(
-        `mqtt://${this.Config.get('mqtt.host')}:${this.Config.get('mqtt.port')}`,
+        `mqtt${this.Config.get('mqtt.ssl') ? 's' : ''}://${this.Config.get('mqtt.host')}:${this.Config.get('mqtt.port')}`,
         {
           username: this.Config.get('mqtt.username'),
           password: this.Config.get('mqtt.password')
