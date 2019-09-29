@@ -13,9 +13,17 @@ class MqttProvider extends ServiceProvider {
     this.app.alias('Insidion/MqttListener', 'MqttListener')
   }
 
+  _registerMqttClient() {
+    this.app.singleton("Insidion/MqttClient", () =>
+      make(require("./../src/Mqtt/MqttClient"))
+    );
+    this.app.alias("Insidion/MqttClient", "MqttClient");
+  }
+
   register () {
     this._registerTask()
     this._registerMqtt()
+    this._registerMqttClient()
   }
 }
 
