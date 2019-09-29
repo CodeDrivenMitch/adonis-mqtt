@@ -139,13 +139,29 @@ class Mqtt {
   }
 
   _createClient () {
-    this.client = mqtt.connect(
-      `mqtt://${this.Config.get('mqtt.host')}:${this.Config.get('mqtt.port')}`,
-      {
-        username: this.Config.get('mqtt.username'),
-        password: this.Config.get('mqtt.password')
-      }
-    )
+    if (!this.Config.get('mqtt.aws.endpoint')) {
+      this.client = mqtt.connect(
+        `mqtt://${this.Config.get('mqtt.host')}:${this.Config.get('mqtt.port')}`,
+        {
+          username: this.Config.get('mqtt.username'),
+          password: this.Config.get('mqtt.password')
+        }
+      )
+    } else {
+      const signUrl = require('aws-device-gateway-signed-url')
+      const endpoint = `${this.Config.get('mqtt.aws.endpoint')}.iot.${this.Config.get('mqtt.aws.regionName')}.amazonaws.com`
+      this.client = mqtt.connect(`wss://${endpoint}/mqtt`,
+        {
+          transformWsUrl: () => {
+            return signUrl({
+              ...this.Config.get('mqtt.aws'),
+              endpoint: endpoint,
+            })
+          }
+        }
+      )
+    }
+
     this.client.on('connect', this._handleConnect.bind(this))
     this.client.on('offline', this._handleDisconnect.bind(this))
     this.client.on('close', this._handleDisconnect.bind(this))
