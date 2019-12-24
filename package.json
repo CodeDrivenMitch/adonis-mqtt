@@ -1,6 +1,6 @@
 {
   "name": "adonis-mqtt",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Easily connect MQTT to you adonisjs app",
   "main": "index.js",
   "scripts": {
@@ -19,23 +19,24 @@
   "author": "Mitchell Herrijgers",
   "license": "MIT",
   "dependencies": {
-    "lodash": "^4.17.10",
-    "mqtt": "^2.17.0",
+    "aws-device-gateway-signed-url": "^1.0.0",
+    "lodash": "^4.17.11",
+    "mqtt": "^2.18.8",
     "mqtt-wildcard": "^3.0.9",
     "pluralize": "^7.0.0"
   },
   "devDependencies": {
-    "@adonisjs/ace": "^4.0.5",
-    "@adonisjs/fold": "^4.0.2",
-    "@adonisjs/sink": "^1.0.13",
-    "aedes": "^0.33.0",
-    "coveralls": "^2.13.1",
+    "@adonisjs/ace": "^5.0.8",
+    "@adonisjs/fold": "^4.0.9",
+    "@adonisjs/sink": "^1.0.17",
+    "aedes": "^0.36.0",
+    "coveralls": "^3.0.2",
     "cz-conventional-changelog": "^2.1.0",
     "japa": "^1.0.4",
     "japa-cli": "^1.0.1",
-    "nyc": "^11.1.0",
-    "semver": "^5.4.1",
-    "standard": "^10.0.3"
+    "nyc": "^13.1.0",
+    "semver": "^5.6.0",
+    "standard": "^12.0.1"
   },
   "directories": {
     "test": "test"
