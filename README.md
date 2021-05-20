@@ -28,7 +28,6 @@ adonis install adonis-mqtt
 
 See [instructions.md](instructions.md) for configuration and usage.
 
-
 ## Contributing
 You are free to contribute, make pull requests and create issues. 
 
