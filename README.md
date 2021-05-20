@@ -1,5 +1,9 @@
 # Adonis MQTT Integration
 
+**!! UNSUPPORTED NOTICE !!**
+I have not worked on this library for quite some time because I have not used Adonis in quite a while. If you'd like to take this library and make it better, send an email to mitchellherrijgers@gmail.com
+
+
 [![Coverage Status](https://coveralls.io/repos/github/Morlack/adonis-mqtt/badge.svg?branch=master)](https://coveralls.io/github/Morlack/adonis-mqtt?branch=master)
 [![Build status](https://ci.appveyor.com/api/projects/status/ox5qs72l40kxci34/branch/master?svg=true)](https://ci.appveyor.com/project/Morlack/adonis-mqtt/branch/master)
 
